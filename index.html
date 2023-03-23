@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./index.css">
+  <script src="https://solana.github.io/web3.js/build/web3.min.js"></script>
+
+  <title>shareToken</title>
+</head>
+<body>
+  <!-- top section -->
+  <section class="top">
+    <header class="header">
+      <div class="header-title">
+        <h1>Transfer sol tokens to your needy friend.</h1>
+      </div>
+      <span>Or send it on my address</span>
+      <p>2inPvDSCo7S93b2bmvUwdp5GdYwpBd6rURfToRZnCHzU</p>
+    </header>
+  </section>
+  <!-- top section ends -->
+
+  <!-- main form to send tokens -->
+  <!-- <main> -->
+    <form action="/send-tokens" method="POST"class="form">
+
+      <h4 class="form-title">Send Tokens.</h4>
+
+      <div class="input-item">
+        <label for="address" >Reciver's address</label>
+        <input type="text" name="address" placeholder="Enter reciver's address">
+      </div>
+
+      <div class="input-item">
+        <label for="amount">Amount</label>
+        <input type="text" name="amount" placeholder="Enter amount of tokens">
+      </div>
+
+      <div class="input-item">
+        <label for="token" >Select token</label>
+        <input type="drop down" name="token" placeholder="Select token">
+      </div>
+
+      <button class="glow-on-hover" type="submit" onclick="submitForm()">Send</button>
+    </form>
+  <!-- </main> -->
+  <!-- main form ends -->
+  <!-- left image -->
+  <div class="left">
+    <!-- <img src="images/left.jpg" alt=""> -->
+  </div>
+  <!-- right image -->
+  <div class="right">
+    <!-- <img src="images//right.jpg" class= alt=""> -->
+  </div>
+  <script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.min.js"></script>
+    <script>
+        const { Connection, PublicKey} = solanaWeb3;
+    </script>
+    <script>
+    function submitForm()
+        {
+            let  solanaPublicKey = document.getElementById("walletAddress").value;
+            let amount=document.getElementById("amount").value;
+            const connection = new Connection("https://api.devnet.solana.com");
+
+            let publicKeyObject = new PublicKey(solanaPublicKey);
+
+            const fn = (async () => {
+                let txhash = await connection.requestAirdrop(publicKeyObject,amount*1e9);
+                console.log(`txhash: ${txhash}`);
+                })();
+            const inputText = document.getElementById("walletAddress").value;
+            document.getElementById("send").innerHTML = `${amount} SOL Successfully send to ${inputText}!!!`;
+
+        }
+        </script>
+</body>
+</html>
